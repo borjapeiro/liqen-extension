@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	  	<script type="text/javascript" src="js/jquery.min.js"></script>
+	  	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/LiqenAppInicio.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/LiqenAppInicio.css">
+		<title>Inicio</title>
+	</head>
+	
+	<body style="background: #ECECEC;">
+		<div class="container">
+			<div class="container">
+			<nav class="navbar navbar-default" id="Question" style="background: #ffffff"><H2 class="text-center" style="padding-left: 3px;padding-right: 3px;">Question</H2></nav><div class="jumbotron" id="CurrentLinquen" style="margin-top:-60px; padding-right: 0px; padding-left: 0px; background-color: #ddd;"><div class="container"><h1 style="border: 3px solid #999;text-align: center;">Current Liqen</h1><button type="button" id="noAdd" class="btn btn-default btn-lg pull-right" style="display: none;">Cancel Liqen</button><button type="button" id="siAdd" class="btn btn-default btn-lg pull-right">New Liqen</button></div></div>
+		</div>
+		<div class="container" id="menu1" style="margin-top:-45px">
+			<ul class="nav nav-pills" style="background: #ffffff; font-size: 1.5em" >
+				<li class="active" id="menuAnnotation"><a data-toggle="pill" href="#ListAnnotation" >Annotation</a></li><li id="menuLiqens"><a data-toggle="pill" href="#ListLiqens" >Liqens</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id="ListAnnotation" style="margin-top:10"><c style="font-size: -webkit-xxx-large;">without annotations</c></div>
+				<div class="tab-pane fade" id="ListLiqens" style="margin-top:10"><div class="list-group"><c style="font-size: -webkit-xxx-large;">without Liqens</c></div>	
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

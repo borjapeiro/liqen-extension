@@ -1,0 +1,38 @@
+{
+   "background": {
+      "persistent": true,
+      "scripts": ["js/LiqenAccion.js", "js/LiqenSelecction.js", "js/LiqenAppInicio.js"]
+   },
+   "browser_action": {
+      "default_icon": {
+         "19": "img/logo_19x18.png",
+         "38": "img/logo_38x36.png"
+      }
+   },
+   "description": "App to annotate, highlight, and tag web pages from liqen project.",
+   "externally_connectable": {
+      "matches": [ "https://liqen-core.herokuapp.com/*" ]
+   },
+   "homepage_url": "http://liqenproject.org/",
+   "icons": {
+      "128": "img/logo_128x123.png",
+      "16": "img/logo_16x15.png",
+      "48": "img/logo_48x46.png"
+   },
+   "content_scripts" : [{
+      "matches" : [ "http://*/*", "https://*/*", "*://*/*", "<all_urls>" ],
+      "js" : ["js/LiqenSelecction.js",  "js/LiqenAppInicio.js" ],
+      "css" : ["css/LiqenSelecction.css", "css/LiqenAppInicio.css"]
+   }],
+   "incognito": "split",
+   "manifest_version": 2,
+   "minimum_chrome_version": "38",
+   "name": "Liqen - Web Annotation",
+   "offline_enabled": false,
+
+   "permissions": [ "http://*/*", "https://*/*", "*://*/*", "<all_urls>", "https://liqen-core.herokuapp.com/*","contentSettings", "storage", "tabs", "webRequest" ],
+   "short_name": "Liqen",
+   "version": "0.1",
+   "version_name": "0.1 (Beta Build)",
+   "web_accessible_resources": [ "js/*", "img/*", "css/*", "appInicio.html" ]
+}
