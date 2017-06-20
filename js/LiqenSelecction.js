@@ -184,6 +184,7 @@ function clicPopButton() {
       var node_c = document.createElement("c");
       node_c.id = "annot"+idActual;
       node_c.style.backgroundColor = "rgba(176, 191, 63, 0.25)";
+      node_c.setAttribute('author', contenidoInfo['author']);
       node_c.style.display = "inline";
       node_c.appendChild(selectionContents);
       range.insertNode(node_c);
@@ -233,15 +234,26 @@ function getTagSelect() {
 }
 
 function clicVista() {
-/*  // falta cambiar cosas
-  var nodes = document.querySelectorAll('*[id]');
-  for (var i = 0; i < nodes.length; i++) {
-    if (nodes[i].id.match("annotation")){
-      console.log(nodes[i].id);
-      console.log(nodes[i].style.backgroundColor);
+  var nodes = document.querySelectorAll('*[author]:not([author="'+contenidoInfo['author']+'"])');
+  var img = document.getElementById('ojo').src.split("/");
+  if ( img[img.length-1] == "glyphicons-52-eye-open.png") {
+    img[img.length-1] = "glyphicons-53-eye-close.png";
+    document.getElementById('ojo').src = img.join("/");
+    for (var i = 0; i < nodes.length; i++) {
+      //console.log(nodes[i].style.backgroundColor);
+      nodes[i].style.backgroundColor = "transparent";
     }
   }
-*/ 
+  else{
+    img[img.length-1] = "glyphicons-52-eye-open.png";
+    document.getElementById('ojo').src = img.join("/");
+    for (var i = 0; i < nodes.length; i++) {
+      //console.log(nodes[i].style.backgroundColor);
+      nodes[i].style.backgroundColor = "rgba(176, 191, 63, 0.25)";
+    }
+
+  }
+//console.log(nodes);
 
 }
 
@@ -382,7 +394,7 @@ function insertPopAnnot(appInicio, contenido) {
 
 }
 
-function insertBarra(appInicio) {
+function insertBarra(appInicio,annot) {
   //Crea los nodos Barra
   var node_divBarra = document.createElement('DIV');
   var node_div_0 = document.createElement('DIV');
@@ -399,6 +411,8 @@ function insertBarra(appInicio) {
 
   //Insetamos en el body
   document.body.appendChild(node_divBarra);
+  //console.log("se manda");
+
 }
 
 function insertButtons(img1,img2) {
@@ -484,13 +498,13 @@ function insertPopError() {
   document.body.appendChild(node_divPopError);
 }
 
-function insertIframe(appInicio,img1,img2,img3) {
+function insertIframe(appInicio,img1,img2,img3,annot) {
   //console.log("entra insertIframe");
   if(document.getElementById('divBarra') == null){
     //console.log("entra insertIframe IF");
 
     //Insertamos la Barra lateral
-    insertBarra(appInicio);
+    insertBarra(appInicio,annot);
 
     //Insertamos la Barra lateral
     insertButtons(img1,img2);
@@ -505,8 +519,19 @@ function insertIframe(appInicio,img1,img2,img3) {
 
 function OnInsert(appInicio,img1,img2,img3, pathAnnot) {
 
+  //new anotación
+  var annot_1={};
+  annot_1['target']={};
+  annot_1['target']['type'] = 'TextQuoteSelector';
+  annot_1['target']['prefix'] = 'Cada año miles de profesionales abandonan el país en ';
+  annot_1['target']['exact'] = 'busca de mejores oportunidades o para huir de la inseguridad,';
+  annot_1['target']['suffix'] = ' reconocen especialistas y autoridades.';
+  annot_1['tags']= ['Reason'];
+  annot_1['author']=2;
+  annot_1['article_id']=1;
+
   //console.log("entra OnInsert");
-  insertIframe(appInicio,img1,img2,img3);
+  insertIframe(appInicio,img1,img2,img3,annot_1);
   //console.log("entra 3");
   var nodeInsert = document.evaluate(pathAnnot, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   console.log(nodeInsert);
@@ -514,6 +539,48 @@ function OnInsert(appInicio,img1,img2,img3, pathAnnot) {
     nodeInsert.addEventListener('mousedown', mouseDown);
     nodeInsert.addEventListener('mouseup', mouseUp);
   }
+
+  insertAnnotations(annot_1,nodeInsert);
 }
 
+function insertAnnotations(annot,nodeActual) {
+  console.log("ENTRA A INSERTAR ANOTACION");
+  console.log(annot);
+  console.log(nodeActual);
+  var text = annot['target']['exact'];
+  if (nodeActual.firstChild){
+    for (var i = 0; i < nodeActual.childNodes.length; i++) {
+      var contiene = nodeActual.childNodes[i].textContent;
+      if (contiene.includes(text)){
+          insertAnnotations(annot,nodeActual.childNodes[i]);
+          break;
+      }
+    }
+  }
+  else{
+    var contiene = nodeActual.textContent;
+    if (contiene.includes(text)){
+      var range = document.createRange();
+      range.setStart(nodeActual,0);
+      range.setEnd(nodeActual, nodeActual.length);
+      var restoText = nodeActual.textContent.split(text);
+      var node_pre = document.createTextNode(restoText[0]);
+      var node_suf = document.createTextNode(restoText[1]);
+      var node_annot = document.createElement("c");
+      node_annot.id = "annot"+idActual;
+      node_annot.style.backgroundColor = "rgba(176, 191, 63, 0.25)";
+      node_annot.setAttribute('author', annot['author']);
+      node_annot.style.display = "inline";
+      node_annot.appendChild(document.createTextNode(text));
+      idActual +=1 ;
+      range.extractContents();
+      range.insertNode(node_suf);
+      range.insertNode(node_annot);
+      range.insertNode(node_pre);
+    }
+  }
+}
 
+function sendAnnot(annot) {
+  document.getElementById('iframeLiqen').contentWindow.postMessage(JSON.stringify(annot), '*');
+}

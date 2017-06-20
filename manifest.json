@@ -13,7 +13,7 @@
    "externally_connectable": {
       "matches": [ "https://liqen-core.herokuapp.com/*" ]
    },
-   "homepage_url": "http://liqenproject.org/",
+   "homepage_url": "http://www.liqenproject.org/",
    "icons": {
       "128": "img/logo_128x123.png",
       "16": "img/logo_16x15.png",
@@ -24,7 +24,6 @@
       "js" : ["js/LiqenSelecction.js",  "js/LiqenAppInicio.js" ],
       "css" : ["css/LiqenSelecction.css", "css/LiqenAppInicio.css"]
    }],
-   "incognito": "split",
    "manifest_version": 2,
    "minimum_chrome_version": "38",
    "name": "Liqen - Web Annotation",

@@ -114,6 +114,17 @@ function waitForTags(){
     setTimeout(function(){waitForTags()}, 3000);
   }
   else {
+      //new anotación
+      var annot_1={};
+      annot_1['target']={};
+      annot_1['target']['type'] = 'TextQuoteSelector';
+      annot_1['target']['prefix'] = 'Cada año miles de profesionales abandonan el país en ';
+      annot_1['target']['exact'] = 'busca de mejores oportunidades o para huir de la inseguridad,';
+      annot_1['target']['suffix'] = ' reconocen especialistas y autoridades.';
+      annot_1['tags']= [2];
+      annot_1['author']=2;
+      annot_1['article_id']=1;
+
     console.log("Entra else");
     console.log(contenido);
     sePuede = false;
@@ -121,6 +132,10 @@ function waitForTags(){
       code: "insertPopAnnot(\
             '"+chrome.extension.getURL('appInicio.html')+"',\
             "+JSON.stringify(contenido)+");"
+    });
+    chrome.tabs.executeScript({
+      code: "sendAnnot(\
+            "+JSON.stringify(annot_1)+");"
     });
   }
 }

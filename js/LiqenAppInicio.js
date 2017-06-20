@@ -226,6 +226,7 @@ function insertLiqen() {
 				if(Current[i].childNodes[1].childNodes[1].childNodes.length == 1){
 					console.log(Current[i].id+" => Con 1 anotacion");
 					
+					
 					var node_p_0 = document.createElement('p');
 					var node_strong_1 = document.createElement('strong');
 					var node_a_1 = document.createElement('a');
@@ -253,7 +254,8 @@ function insertLiqen() {
 				else{
 					console.log(Current[i].id+" => Con 2 o + anotaciones");
 					
-					var allAnnot = Current[1].childNodes[1].childNodes[1].childNodes[1].childNodes;
+					
+					var allAnnot = Current[i].childNodes[1].childNodes[1].childNodes[1].childNodes;
 					console.log(allAnnot);
 					console.log(allAnnot.length);
 					
@@ -408,7 +410,7 @@ function insertLiqen() {
 				else{
 					console.log(Current[i].id+" => Con 2 o + anotaciones");
 					
-					var allAnnot = Current[1].childNodes[1].childNodes[1].childNodes[1].childNodes;
+					var allAnnot = Current[i].childNodes[1].childNodes[1].childNodes[1].childNodes;
 					console.log(allAnnot);
 					console.log(allAnnot.length);
 					
@@ -853,8 +855,9 @@ function OnInsertAppInicio() {
 }
 
 window.onmessage = function(e){
-	//console.log(e);
-	//console.log(e.data);
+	console.log("HAY MENSAJEEEE!!!!");
+	console.log(e);
+	console.log(e.data);
 	var data = JSON.parse(e.data);
 	console.log(data);
     if (data["question"]) {
